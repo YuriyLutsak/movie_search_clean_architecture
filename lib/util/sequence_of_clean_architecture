@@ -1,0 +1,26 @@
+beginning from UI logic:
+
+create:
+domain
+  10) entities
+      repo
+               6) i_myClass_repo
+      usecase
+               5) myClass_usecase with 'call' method
+data
+      network_service
+                     1) network_service.dart = create singleton of Dio
+                     2) nameOfProject_api_service.dart = all CRUD. make a response, method 'get' with baseUrl, path and param
+      remote_storage
+                     8) requestForOneResponse_service =
+                               make Future<({bool isSuccess,
+                                             someObject? object,
+                                             String? error,})> 'getSomeResult(if need Str query = param in endpoint)'
+      repo
+                7) myClass_repo impl i_myClass_repo
+
+presentation:
+                3) somePage:
+                     4) blocOfThisPage (bloc -> state -> event -> bloc 'on' method)
+
+9) dependency_injection creation in the end !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
