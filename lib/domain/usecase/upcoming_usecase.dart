@@ -22,6 +22,9 @@ class UpcomingUsecase implements IUpcomingUsecase {
         bool isSuccess,
         List<Movie>? movies,
       })> call() async {
-    return iUpcomingRepo.getUpcomingResult(); // await nе нужен
+   var result = await iUpcomingRepo.getUpcomingResult();
+   // await нужен если с result проводим еще какае-то действия перед возвратом
+   return result;
+  //  return iUpcomingRepo.getUpcomingResult(); // await nе нужен если сразу возвращаем результат
   }
 }

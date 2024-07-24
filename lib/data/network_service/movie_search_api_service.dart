@@ -8,4 +8,5 @@ Future<Response?> get(
 }) async {
   Response response = await NetworkService.instance.dio
       .get('$kBaseUrl$path', queryParameters: queryParameters);
+  return response;
 }
