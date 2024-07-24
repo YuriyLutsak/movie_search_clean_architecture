@@ -20,3 +20,11 @@ void setup() {
 //BLOCS
     ..registerLazySingleton<UpcomingBloc>(() => UpcomingBloc(getIt.get()));
 }
+
+// void setup() {
+//   getIt
+//     ..registerLazySingleton<UpcomingService>(() => UpcomingService())
+//     ..registerLazySingleton<IUpcomingRepo>(() => UpcomingRepo(getIt.get<UpcomingService>()))
+//     ..registerLazySingleton<IUpcomingUsecase>(() => UpcomingUsecase(getIt.get<IUpcomingRepo>()))
+//     ..registerLazySingleton<UpcomingBloc>(() => UpcomingBloc(getIt.get<IUpcomingUsecase>()));
+// }

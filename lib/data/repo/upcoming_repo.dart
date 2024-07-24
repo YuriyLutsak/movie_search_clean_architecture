@@ -8,8 +8,12 @@ class UpcomingRepo implements IUpcomingRepo {
   UpcomingRepo(this.upcomingService);
 
   @override
-  Future<({String? error, bool isSuccess, List<Movie>? movies,})>
-  getUpcomingResult() async {
+  Future<
+      ({
+        String? error,
+        bool isSuccess,
+        List<Movie>? movies,
+      })> getUpcomingResult() async {
     return upcomingService.getUpcomingResult();
   }
 }
