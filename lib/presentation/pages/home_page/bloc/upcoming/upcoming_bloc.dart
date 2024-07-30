@@ -18,7 +18,7 @@ class UpcomingBloc extends Bloc<UpcomingEvent, UpcomingState> {
       emit(
         state.copyWith(blocStatus: BlocStatus.LOADING),
       );
-      // maping result in state from usecase
+      // mapping result in state from usecase
       final result = await _upcomingUsecase.call(); // call method call from usecase
       if (result.isSuccess) {
         emit(state.copyWith(

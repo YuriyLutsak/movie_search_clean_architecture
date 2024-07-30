@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movie_search/config/routes/routes.dart';
 import 'package:movie_search/presentation/pages/home_page/home_page.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
     );
   }
 }

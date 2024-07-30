@@ -5,5 +5,5 @@ import 'movie_serch_app.dart';
 
 void main() {
   setup();
-  runApp(const MyApp());
+  runApp(MyApp());
 }

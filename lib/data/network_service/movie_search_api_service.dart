@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_search/util/constants.dart';
 import 'package:movie_search/data/network_service/network_service.dart';
-
+// all crud here
 Future<Response?> get(
   String path, {
   Map<String, dynamic>? queryParameters,

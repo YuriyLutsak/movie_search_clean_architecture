@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:movie_search/util/constants.dart';
 import 'package:movie_search/data/network_service/movie_search_api_service.dart';
 import 'package:movie_search/domain/entity/movie/movie.dart';
+import 'package:movie_search/util/constants.dart';
 
-final class UpcomingService {
+final class TopRateService {
   Future<
       ({
         bool isSuccess,
         List<Movie>? movies,
         String? error,
-      })> getUpcomingResult() async {
+      })> getTopRateResult() async {
     try {
-      Response? response = await get('/movie/upcoming', queryParameters: {
-        "api_key": kApiKey,
+      Response? response = await get('/movie/top_rated', queryParameters: {
+        'api_key': kApiKey,
       });
 
       var result = response!.data as Map<String, dynamic>;
@@ -27,7 +27,8 @@ final class UpcomingService {
       return (
         isSuccess: false,
         movies: null,
-        error: errorResult['status_message']?.toString() ?? 'Unknown error occurred in upcoming service'
+        error: errorResult['status_message']?.toString() ??
+            'Unknown error occurred in top rate service'
       );
     }
   }

@@ -1,18 +1,22 @@
 import 'package:dio/dio.dart';
-import 'package:movie_search/util/constants.dart';
 import 'package:movie_search/data/network_service/movie_search_api_service.dart';
 import 'package:movie_search/domain/entity/movie/movie.dart';
+import 'package:movie_search/util/constants.dart';
 
-final class UpcomingService {
+final class SearchService {
   Future<
       ({
         bool isSuccess,
         List<Movie>? movies,
         String? error,
-      })> getUpcomingResult() async {
+      })> getSearchResult(String query) async {
     try {
-      Response? response = await get('/movie/upcoming', queryParameters: {
-        "api_key": kApiKey,
+      Response? response = await get('/search/movie', queryParameters: {
+        'query': query,
+        'include_adult': false,
+        'language': 'en-US',
+        'page': 1,
+        'api_key': kApiKey,
       });
 
       var result = response!.data as Map<String, dynamic>;
@@ -23,11 +27,12 @@ final class UpcomingService {
 
       return (isSuccess: true, movies: movies, error: null);
     } on DioException catch (e) {
-      final errorResult = e.response?.data as Map<String, dynamic>;
+      final errorResult = e.response!.data as Map<String, dynamic>;
       return (
         isSuccess: false,
         movies: null,
-        error: errorResult['status_message']?.toString() ?? 'Unknown error occurred in upcoming service'
+        error: errorResult['status_message']?.toString() ??
+            'Unknown error occurred in search service'
       );
     }
   }
