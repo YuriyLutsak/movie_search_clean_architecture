@@ -42,7 +42,6 @@ class _MovieTileState extends State<MovieTile> {
               flex: isWideScreen ? 1 : 2,
               child: GestureDetector(
                 onTap: (){
-                  print('object');
                 },
                 child: Image.network(
                   widget.poster,

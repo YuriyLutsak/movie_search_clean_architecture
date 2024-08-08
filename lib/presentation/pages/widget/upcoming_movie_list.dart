@@ -1,18 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_search/config/routes/routes.gr.dart';
+import 'package:movie_search/data/local_storage/hive_servise.dart';
+import 'package:movie_search/dependency_injection.dart' as di;
 
 import '../../../util/bloc_status.dart';
 import '../../../util/constants.dart';
 import '../../widgets/buttons/star_button.dart';
 import '../home_page/bloc/upcoming/upcoming_bloc.dart';
 
-import 'package:movie_search/dependency_injection.dart' as di;
-
 class UpcomingMoviesList extends StatelessWidget {
   final UpcomingBloc _upcomingBloc = di.getIt.get();
+  final HiveService hiveService = di.getIt.get();
 
   UpcomingMoviesList({Key? key}) : super(key: key);
 
@@ -65,7 +65,9 @@ class UpcomingMoviesList extends StatelessWidget {
                             Positioned(
                               right: 8,
                               top: 8,
-                              child: StarButton(),
+                              child: StarButton(
+                                movie: item,
+                              ),
                             ),
                           ],
                         ),

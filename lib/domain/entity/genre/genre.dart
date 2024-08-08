@@ -1,9 +1,9 @@
-
 import 'package:flutter/foundation.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'genre.freezed.dart';
+
 part 'genre.g.dart';
 
 @freezed

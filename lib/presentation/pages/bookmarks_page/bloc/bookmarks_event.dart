@@ -4,9 +4,6 @@ part of 'bookmarks_bloc.dart';
 sealed class BookmarksEvent {}
 
 class GetBookmarksEvent extends BookmarksEvent {
-  final List<Movie> movies;
-
-  GetBookmarksEvent({required this.movies});
 }
 
 class AddToBookMarksEvent extends BookmarksEvent {

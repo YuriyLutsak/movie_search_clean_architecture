@@ -8,8 +8,12 @@ class DetailRepo implements IDetailRepo {
   DetailRepo(this.detailService);
 
   @override
-  Future<({String? error, bool isSuccess, Movie? movie})> getDetailResult(
-      int movieId) {
+  Future<
+      ({
+        String? error,
+        bool isSuccess,
+        Movie? movie,
+      })> getDetailResult(int movieId) {
     return detailService.getDetailResult(movieId);
   }
 }

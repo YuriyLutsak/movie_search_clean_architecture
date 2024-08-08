@@ -1,8 +1,9 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_search/config/routes/routes.gr.dart';
 import 'package:movie_search/presentation/pages/widget/top_rate_movie_list.dart';
-import '../widget/upcoming_movie_list.dart';
 
+import '../widget/upcoming_movie_list.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -25,6 +26,12 @@ class HomePage extends StatelessWidget {
             TopRateMovieList(),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.router.push(BookmarksRoute());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

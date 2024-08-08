@@ -1,32 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:movie_search/dependency_injection.dart' as di;
-import 'package:movie_search/domain/entity/genre/genre.dart';
 import 'package:movie_search/presentation/pages/search_page/bloc/search_bloc.dart';
 import 'package:movie_search/util/bloc_status.dart';
 import 'package:movie_search/util/constants.dart';
-import '../../widgets/movie_tile.dart';
-//
-// void main() {
-//   di.setup();
-//   runApp(MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Search Page',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: SearchPage(),
-//     );
-//   }
-// }
 
+import '../../widgets/movie_tile.dart';
 
 @RoutePage()
 class SearchPage extends StatelessWidget {

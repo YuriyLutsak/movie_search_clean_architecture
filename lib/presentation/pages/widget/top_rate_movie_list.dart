@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_search/config/routes/routes.gr.dart';
+import 'package:movie_search/data/local_storage/hive_servise.dart';
+import 'package:movie_search/domain/entity/hive/movie_hive/movie_hive.dart';
+import 'package:movie_search/presentation/pages/bookmarks_page/bloc/bookmarks_bloc.dart';
 import 'package:movie_search/util/bloc_status.dart';
 import 'package:movie_search/util/constants.dart';
 
@@ -13,6 +16,8 @@ import 'package:movie_search/dependency_injection.dart' as di;
 
 class TopRateMovieList extends StatelessWidget {
   final TopRateBloc _topRateBloc = di.getIt.get();
+  final HiveService hiveService = di.getIt.get();
+  final BookmarksBloc _bookmarksBloc = di.getIt.get();
 
   TopRateMovieList({super.key});
 
@@ -68,7 +73,10 @@ class TopRateMovieList extends StatelessWidget {
                             Positioned(
                               right: 8,
                               top: 8,
-                              child: StarButton(),
+                              child: StarButton(
+                                // onPress: () {},
+                                 movie: item,
+                              ),
                             ),
                           ],
                         ),
