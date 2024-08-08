@@ -1,5 +1,4 @@
 import 'package:movie_search/domain/entity/hive/movie_hive/movie_hive.dart';
-import 'package:movie_search/domain/entity/movie/movie.dart';
 import 'package:movie_search/domain/repo/i_movie_hive_repo.dart';
 
 abstract interface class IGetStoredUsecase {

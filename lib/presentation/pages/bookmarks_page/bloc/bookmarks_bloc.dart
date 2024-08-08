@@ -5,17 +5,11 @@ import 'package:movie_search/domain/entity/movie/movie.dart';
 import 'package:movie_search/domain/usecase/hive_usecases/get_stored_usecase.dart';
 import 'package:movie_search/util/bloc_status.dart';
 
-import '../../../../domain/usecase/hive_usecases/add_stored_usecase.dart';
-import '../../../../domain/usecase/hive_usecases/delete_stored_usecase.dart';
-
 part 'bookmarks_event.dart';
-
 part 'bookmarks_state.dart';
 
 class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   final IGetStoredUsecase _getStoredUsecase = di.getIt.get();
-  final IAddStorageUsecase _addStorageUsecase = di.getIt.get();
-  final IDeleteStorageUsecase _deleteStorageUsecase = di.getIt.get();
 
   BookmarksBloc() : super(BookmarksState(blocStatus: BlocStatus.NONE)) {
     on<GetBookmarksEvent>((event, emit) async {

@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:movie_search/domain/entity/genre/genre.dart';
 import 'package:movie_search/domain/entity/movie/movie.dart';
 
 part 'movie_hive.g.dart';
