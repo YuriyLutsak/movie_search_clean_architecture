@@ -3,8 +3,7 @@ part of 'bookmarks_bloc.dart';
 @immutable
 sealed class BookmarksEvent {}
 
-class GetBookmarksEvent extends BookmarksEvent {
-}
+class GetBookmarksEvent extends BookmarksEvent {}
 
 class AddToBookMarksEvent extends BookmarksEvent {
   final Movie movie;

@@ -18,6 +18,8 @@ class UpcomingMoviesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme.of(context).textTheme;
+
     _upcomingBloc.add(GetUpcomingEvent());
     return BlocBuilder<UpcomingBloc, UpcomingState>(
       bloc: _upcomingBloc,
@@ -46,25 +48,28 @@ class UpcomingMoviesList extends StatelessWidget {
                   );
                 },
                 child: Container(
-                  width: 150,
+                  width: 100,
                   margin: EdgeInsets.all(8),
                   child: Column(
                     children: [
                       Expanded(
                         child: Stack(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      '$kImgPref${item.poster_path}'),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        '$kImgPref${item.poster_path}'),
+                                  ),
                                 ),
                               ),
                             ),
                             Positioned(
-                              right: 8,
-                              top: 8,
+                              right: 0,
+                              top: 0,
                               child: StarButton(
                                 movie: item,
                               ),
@@ -75,19 +80,11 @@ class UpcomingMoviesList extends StatelessWidget {
                       SizedBox(height: 8),
                       Text(
                         '${item.title}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.center,
+                        style: textTheme.titleSmall,
                       ),
                       Text(
                         'Rating: ${item.vote_average}',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 10,
-                        ),
-                        textAlign: TextAlign.center,
+                        style: textTheme.titleMedium,
                       ),
                     ],
                   ),
