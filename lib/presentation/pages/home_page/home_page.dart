@@ -27,12 +27,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.router.push(BookmarksRoute());
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 }

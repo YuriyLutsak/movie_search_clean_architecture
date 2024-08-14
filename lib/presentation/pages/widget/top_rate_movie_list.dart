@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_search/config/routes/routes.gr.dart';
+import 'package:movie_search/config/theme/white.dart';
 import 'package:movie_search/data/local_storage/hive_servise.dart';
 import 'package:movie_search/dependency_injection.dart' as di;
 import 'package:movie_search/util/bloc_status.dart';
@@ -14,10 +15,15 @@ class TopRateMovieList extends StatelessWidget {
   final TopRateBloc _topRateBloc = di.getIt.get();
   final HiveService hiveService = di.getIt.get();
 
+
   TopRateMovieList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var textTheme = Theme
+        .of(context)
+        .textTheme;
+
     _topRateBloc.add(GetTopRateEvent());
     return BlocBuilder<TopRateBloc, TopRateState>(
       bloc: _topRateBloc,
@@ -51,29 +57,32 @@ class TopRateMovieList extends StatelessWidget {
                   child: Row(
                     children: [
                       // Image section
-                      Container(
-                        width: 150,
-                        height: 150, // Fixed height for the image
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      '$kImgPref${item.poster_path}'),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Container(
+                          width: 150,
+                          height: 250, // Fixed height for the image
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        '$kImgPref${item.poster_path}'),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              right: 8,
-                              top: 8,
-                              child: StarButton(
-                                // onPress: () {},
-                                 movie: item,
+                              Positioned(
+                                right: 0.1,
+                                top: 0.1,
+                                child: StarButton(
+                                  // onPress: () {},
+                                  movie: item,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(width: 8),
@@ -84,29 +93,17 @@ class TopRateMovieList extends StatelessWidget {
                           children: [
                             Text(
                               '${item.title}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                              textAlign: TextAlign.start,
+                              style: textTheme.titleLarge,
                             ),
                             SizedBox(height: 8),
                             Text(
                               'Rating: ${item.vote_average}',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 10,
-                              ),
-                              textAlign: TextAlign.start,
+                              style: textTheme.titleMedium,
                             ),
                             SizedBox(height: 8),
                             Text(
                               'Rating: ${item.overview}',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 10,
-                              ),
-                              textAlign: TextAlign.start,
+                              style: textTheme.bodyMedium,
                             ),
                           ],
                         ),
