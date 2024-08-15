@@ -40,7 +40,7 @@ class MovieHiveRepo implements IMovieHiveRepo {
       })> addMovieToHive(Movie movie) async {
     try {
       var movieHive = MovieHive.fromMovie(movie);
-      await hiveService.addMovie(movieHive);
+      hiveService.addMovie(movieHive);
       var movies = await hiveService.getAllMovies();
       return (
         isSuccess: true,
@@ -61,19 +61,20 @@ class MovieHiveRepo implements IMovieHiveRepo {
       ({
         String? error,
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
       })> deleteMovieFromHive(int id) async {
     try {
-      await hiveService.deleteMovie(id);
+      hiveService.deleteMovie(id);
+      var movies = await hiveService.getAllMovies();
       return (
         isSuccess: true,
-        movie: null,
+        movies: movies,
         error: null,
       );
     } catch (e) {
       return (
-        isSuccess: true,
-        movie: null,
+        isSuccess: false,
+        movies: null,
         error: 'movie deleted from hive. ${e.toString()}',
       );
     }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movie_search/data/local_storage/hive_servise.dart';
 import 'package:movie_search/dependency_injection.dart' as di;
-import 'package:movie_search/domain/entity/hive/movie_hive/movie_hive.dart';
 import 'package:movie_search/domain/entity/movie/movie.dart';
 import 'package:movie_search/presentation/pages/bookmarks_page/bloc/bookmarks_bloc.dart';
-
-import '../../../data/local_storage/hive_servise.dart';
 
 class StarButton extends StatefulWidget {
   final Movie movie;
@@ -48,15 +46,15 @@ class _StarButtonState extends State<StarButton> {
           setState(() {
             _isFavorite = false;
           });
-          // widget._hiveService.deleteMovie(widget.movie.id);
-          widget._bookmarksBloc
-              .add(RemoveFromBookmarksEvent(movie: widget.movie));
+          // widget._hiveService.deleteMovie(widget.movie.id); НЕ ПРАВИЛЬНО. не перерисовывает виджет
+          widget._bookmarksBloc.add(RemoveFromBookmarksEvent(widget.movie.id)); // ПРАВИЛЬНО. перерисовывает виджет
         } else {
           setState(() {
             _isFavorite = true;
           });
-          // widget._hiveService.addMovie(MovieHive.fromMovie(widget.movie));
-          widget._bookmarksBloc.add(AddToBookMarksEvent(movie: widget.movie));
+          // widget._hiveService.addMovie(MovieHive.fromMovie(widget.movie)); НЕ ПРАВИЛЬНО
+          widget._bookmarksBloc.add(AddToBookMarksEvent(
+              movie: widget.movie)); // ПРАВИЛЬНО. перерисовывает виджет
         }
       },
     );

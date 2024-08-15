@@ -12,7 +12,11 @@ class AddToBookMarksEvent extends BookmarksEvent {
 }
 
 class RemoveFromBookmarksEvent extends BookmarksEvent {
-  final Movie movie;
+  final int id;
 
-  RemoveFromBookmarksEvent({required this.movie});
+  RemoveFromBookmarksEvent(this.id);
+
+// так тоже работает
+// final Movie movie;
+// RemoveFromBookmarksEvent({required this.movie});
 }

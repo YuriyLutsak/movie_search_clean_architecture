@@ -2,11 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:movie_search/dependency_injection.dart' as di;
 import 'package:movie_search/domain/entity/movie/movie.dart';
+import 'package:movie_search/domain/usecase/hive_usecases/add_stored_usecase.dart';
+import 'package:movie_search/domain/usecase/hive_usecases/delete_stored_usecase.dart';
 import 'package:movie_search/domain/usecase/hive_usecases/get_stored_usecase.dart';
 import 'package:movie_search/util/bloc_status.dart';
-
-import '../../../../domain/usecase/hive_usecases/add_stored_usecase.dart';
-import '../../../../domain/usecase/hive_usecases/delete_stored_usecase.dart';
 
 part 'bookmarks_event.dart';
 
@@ -47,14 +46,14 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
     on<AddToBookMarksEvent>((event, emit) async {
       try {
         final result = await _addStorageUsecase.call(event.movie);
-        List<Movie> movies = (result.movies ?? [])
+        List<Movie> updatedMovies = (result.movies ?? [])
             .map((movieHive) => Movie.fromMovieHive(movieHive))
             .toList();
 
         if (result.isSuccess) {
           emit(state.copyWith(
             blocStatus: BlocStatus.LOADED,
-            movies: movies,
+            movies: updatedMovies,
             error: null,
           ));
         }
@@ -69,24 +68,28 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
       }
     });
 
-    on<RemoveFromBookmarksEvent>((event, emit) {
+    on<RemoveFromBookmarksEvent>((event, emit) async {
       try {
-        final updatedMovies = List<Movie>.from(state.movies ?? []);
-        updatedMovies.remove(event.movie);
+        final result = await _deleteStorageUsecase.call(event.id);
+        List<Movie> updateList = (result.movies)!
+            .map((movieHive) => Movie.fromMovieHive(movieHive))
+            .toList();
 
-        emit(
-          state.copyWith(
-            blocStatus: BlocStatus.LOADED,
-            movies: updatedMovies,
-            error: null,
-          ),
-        );
+        if (result.isSuccess) {
+          emit(
+            state.copyWith(
+              blocStatus: BlocStatus.LOADED,
+              movies: updateList,
+              error: null,
+            ),
+          );
+        }
       } catch (e) {
         emit(
           state.copyWith(
             blocStatus: BlocStatus.ERROR,
-            movies: state.movies,
-            error: e.toString(),
+            movies: null,
+            error: state.error,
           ),
         );
       }

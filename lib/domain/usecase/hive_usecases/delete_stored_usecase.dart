@@ -5,7 +5,7 @@ abstract interface class IDeleteStorageUsecase {
   Future<
       ({
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
         String? error,
       })> call(int id);
 }
@@ -20,7 +20,7 @@ class DeleteStorageUsecase implements IDeleteStorageUsecase {
       ({
         String? error,
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
       })> call(int id) async {
     return iMovieHiveRepo.deleteMovieFromHive(id);
   }
