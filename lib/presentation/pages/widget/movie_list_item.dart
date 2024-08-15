@@ -12,6 +12,8 @@ class MovieListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return GestureDetector(
       onTap: () {
         context.router.push(DetailRoute(filmId: movie.id));

@@ -1,12 +1,13 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_search/config/routes/routes.gr.dart';
 import 'package:movie_search/dependency_injection.dart' as di;
 import 'package:movie_search/presentation/pages/search_page/bloc/search_bloc.dart';
+import 'package:movie_search/presentation/widgets/buttons/star_button.dart';
 import 'package:movie_search/util/bloc_status.dart';
 import 'package:movie_search/util/constants.dart';
-
-import '../../widgets/movie_tile.dart';
 
 @RoutePage()
 class SearchPage extends StatelessWidget {
@@ -17,10 +18,6 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MediaQuery to get screen width and height
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isWideScreen = screenWidth > 600; // Define your breakpoint here
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -28,7 +25,6 @@ class SearchPage extends StatelessWidget {
           children: [
             // Responsive TextField
             SizedBox(
-              width: isWideScreen ? screenWidth * 0.5 : double.infinity,
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
@@ -70,12 +66,61 @@ class SearchPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var item = state.movies![index];
                         var poster = item.poster_path ?? '';
-                        return MovieTile(
-                          title: item.title,
-                          genres: item.genres,
-                          overview: item.overview,
-                          poster: '$kImgPref$poster',
-                          rating: item.vote_average,
+
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Image with Star button
+                              Expanded(
+                                child: Stack(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        context.router
+                                            .push(DetailRoute(filmId: item.id));
+                                      },
+                                      child: Image.network(
+                                        '$kImgPref$poster',
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: Colors.grey,
+                                            child: Icon(Icons.error,
+                                                color: Colors.red),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 8.0,
+                                        right: 8.0,
+                                        child: StarButton(movie: item)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(item.title),
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      item.overview,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Text('Rating: ${item.vote_average}'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     );

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:movie_search/dependency_injection.dart' as di;
 import 'package:movie_search/domain/entity/hive/movie_hive/movie_hive.dart';
 import 'package:movie_search/domain/entity/movie/movie.dart';
+import 'package:movie_search/presentation/pages/bookmarks_page/bloc/bookmarks_bloc.dart';
 
 import '../../../data/local_storage/hive_servise.dart';
 
 class StarButton extends StatefulWidget {
   final Movie movie;
+  final BookmarksBloc _bookmarksBloc = di.getIt.get();
   final HiveService _hiveService = di.getIt.get();
 
   StarButton({
@@ -46,12 +48,15 @@ class _StarButtonState extends State<StarButton> {
           setState(() {
             _isFavorite = false;
           });
-          widget._hiveService.deleteMovie(widget.movie.id);
+          // widget._hiveService.deleteMovie(widget.movie.id);
+          widget._bookmarksBloc
+              .add(RemoveFromBookmarksEvent(movie: widget.movie));
         } else {
           setState(() {
             _isFavorite = true;
           });
-          widget._hiveService.addMovie(MovieHive.fromMovie(widget.movie));
+          // widget._hiveService.addMovie(MovieHive.fromMovie(widget.movie));
+          widget._bookmarksBloc.add(AddToBookMarksEvent(movie: widget.movie));
         }
       },
     );
