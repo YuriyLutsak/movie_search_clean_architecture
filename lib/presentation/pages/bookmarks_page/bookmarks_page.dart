@@ -5,7 +5,8 @@ import 'package:movie_search/dependency_injection.dart' as di;
 import 'package:movie_search/presentation/pages/bookmarks_page/bloc/bookmarks_bloc.dart';
 import 'package:movie_search/util/bloc_status.dart';
 
-import '../widget/movie_list_item.dart';
+import '../../../config/routes/routes.gr.dart';
+import '../../../util/constants.dart';
 
 @RoutePage()
 class BookmarksPage extends StatelessWidget {
@@ -31,8 +32,48 @@ class BookmarksPage extends StatelessWidget {
           return ListView.builder(
             itemCount: state.movies!.length,
             itemBuilder: (context, index) {
-              var item = state.movies![index];
-              return MovieListItem(movie: item);
+              var movie = state.movies![index];
+              return GestureDetector(
+                onTap: () {
+                  context.router.push(DetailRoute(filmId: movie.id));
+                },
+                child: Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 100.0,
+                        height: 150.0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            '$kImgPref${movie.poster_path}',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(movie.title),
+                            SizedBox(height: 4.0),
+                            Text('Рейтинг: ${movie.vote_average}'),
+                            SizedBox(height: 4.0),
+                            Text('Жанры: ${movie.genres?.join(', ')}'),
+                            SizedBox(height: 4.0),
+                            Text(movie.overview,
+                                maxLines: 3, overflow: TextOverflow.ellipsis),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+
+              //MovieListItem(movie: item);
             },
           );
         },

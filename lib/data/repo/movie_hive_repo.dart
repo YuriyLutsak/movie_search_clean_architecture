@@ -36,21 +36,21 @@ class MovieHiveRepo implements IMovieHiveRepo {
       ({
         String? error,
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
       })> addMovieToHive(Movie movie) async {
-    var movieHive = MovieHive.fromMovie(movie);
-    await hiveService.addMovie(movieHive);
-
     try {
+      var movieHive = MovieHive.fromMovie(movie);
+      await hiveService.addMovie(movieHive);
+      var movies = await hiveService.getAllMovies();
       return (
         isSuccess: true,
-        movie: movieHive,
+        movies: movies,
         error: null,
       );
     } catch (e) {
       return (
         isSuccess: false,
-        movie: null,
+        movies: null,
         error: e.toString(),
       );
     }

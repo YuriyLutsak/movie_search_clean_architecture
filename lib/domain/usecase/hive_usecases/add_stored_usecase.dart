@@ -6,7 +6,7 @@ abstract interface class IAddStorageUsecase {
   Future<
       ({
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
         String? error,
       })> call(Movie movie);
 }
@@ -21,7 +21,7 @@ class AddStorageUsecase implements IAddStorageUsecase {
       ({
         String? error,
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
       })> call(Movie movie) {
     return iMovieHiveRepo.addMovieToHive(movie);
   }

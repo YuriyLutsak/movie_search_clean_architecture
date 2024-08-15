@@ -35,7 +35,7 @@ abstract class $AppRouter extends _i6.RootStackRouter {
     BottomTabBarNavigationRoute.name: (routeData) {
       return _i6.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.BottomTabBarNavigationScreen(),
+        child: _i2.BottomTabBarNavigationScreen(),
       );
     },
     DetailRoute.name: (routeData) {

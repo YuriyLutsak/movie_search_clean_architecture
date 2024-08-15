@@ -5,11 +5,17 @@ import 'package:movie_search/domain/entity/movie/movie.dart';
 import 'package:movie_search/domain/usecase/hive_usecases/get_stored_usecase.dart';
 import 'package:movie_search/util/bloc_status.dart';
 
+import '../../../../domain/usecase/hive_usecases/add_stored_usecase.dart';
+import '../../../../domain/usecase/hive_usecases/delete_stored_usecase.dart';
+
 part 'bookmarks_event.dart';
+
 part 'bookmarks_state.dart';
 
 class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
   final IGetStoredUsecase _getStoredUsecase = di.getIt.get();
+  final IAddStorageUsecase _addStorageUsecase = di.getIt.get();
+  final IDeleteStorageUsecase _deleteStorageUsecase = di.getIt.get();
 
   BookmarksBloc() : super(BookmarksState(blocStatus: BlocStatus.NONE)) {
     on<GetBookmarksEvent>((event, emit) async {
@@ -38,24 +44,25 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
       }
     });
 
-    on<AddToBookMarksEvent>((event, emit) {
+    on<AddToBookMarksEvent>((event, emit) async {
       try {
-        // Предполагаем, что state.movies не равен null и инициализирован
-        final updatedMovies = List<Movie>.from(state.movies ?? []);
-        updatedMovies.add(event.movie);
+        final result = await _addStorageUsecase.call(event.movie);
+        List<Movie> movies = (result.movies ?? [])
+            .map((movieHive) => Movie.fromMovieHive(movieHive))
+            .toList();
 
-        emit(
-          state.copyWith(
+        if (result.isSuccess) {
+          emit(state.copyWith(
             blocStatus: BlocStatus.LOADED,
-            movies: updatedMovies,
+            movies: movies,
             error: null,
-          ),
-        );
+          ));
+        }
       } catch (e) {
         emit(
           state.copyWith(
             blocStatus: BlocStatus.ERROR,
-            movies: state.movies,
+            movies: null,
             error: e.toString(),
           ),
         );
@@ -64,7 +71,6 @@ class BookmarksBloc extends Bloc<BookmarksEvent, BookmarksState> {
 
     on<RemoveFromBookmarksEvent>((event, emit) {
       try {
-        // Предполагаем, что state.movies не равен null и инициализирован
         final updatedMovies = List<Movie>.from(state.movies ?? []);
         updatedMovies.remove(event.movie);
 
