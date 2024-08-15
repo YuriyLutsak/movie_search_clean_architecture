@@ -1,9 +1,6 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_search/config/routes/routes.gr.dart';
-
-import '../../../../domain/entity/movie/movie.dart';
 
 @RoutePage()
 class BottomTabBarNavigationScreen extends StatelessWidget {

@@ -14,11 +14,11 @@
           .toList(); // Возвращение всех объектов из бокса в виде списка
     }
 
-    Future<void> updateDeck(int index, MovieHive movieHive) async {
-      var box = await _box; // Ожидание открытия бокса
-      await box.putAt(
-          index, movieHive); // Обновление объекта по указанному индексу
-    }
+    // Future<void> updateDeck(int index, MovieHive movieHive) async {
+    //   var box = await _box; // Ожидание открытия бокса
+    //   await box.putAt(
+    //       index, movieHive); // Обновление объекта по указанному индексу
+    // }
 
     // ИДЕТ ВМЕСТЕ:
     // ДОБАВЛЕНИЕ через put(dynamic key, E value) чтоб удалить

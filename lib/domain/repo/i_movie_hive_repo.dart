@@ -12,14 +12,14 @@ abstract interface class IMovieHiveRepo {
   Future<
       ({
         bool isSuccess,
-      List< MovieHive>? movies,
+        List< MovieHive>? movies,
         String? error,
       })> addMovieToHive(Movie movie);
 
   Future<
       ({
         bool isSuccess,
-        MovieHive? movie,
+        List<MovieHive>? movies,
         String? error,
       })> deleteMovieFromHive(int id);
 }
